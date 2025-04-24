@@ -36,9 +36,9 @@
           <small *ngIf="signupData.error" class="text-danger">{{ signupData.error }}</small>
         </div>
   
-        <div class="d-grid gap-2">
+        <div class="d-grid gap-1 col-12 mx-auto mt-3">
           <button class="btn btn-dark" type="submit" [disabled]="signupForm.invalid || signupData.loading">
-            {{ signupData.loading ? 'Signing up...' : 'Signup for free' }}
+            {{ signupData.loading ? 'Signing up...' : 'Signup ' }}
           </button>
           <a class="btn btn-sm btnLight" routerLink="/login">Already have an account? Log in</a>
         </div>

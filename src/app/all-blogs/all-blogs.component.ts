@@ -5,7 +5,7 @@ import { AllBlogsModel } from '../interfaces/all-blogs-model';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { CategoryComponentComponent } from '../category/category.component';
+import { CategoryComponentComponent } from '../common/category/category.component';
 
 @Component({
   selector: 'app-all-blogs',

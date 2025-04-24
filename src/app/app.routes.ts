@@ -19,4 +19,5 @@ export const routes: Routes = [
     path: 'all_blogs',
     component: AllBlogsComponent,
   },
+  
 ];

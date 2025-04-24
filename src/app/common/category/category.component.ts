@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { CategoriesModel } from '../interfaces/categories-model';
-import { CategoryService } from '../services/category.service';
+import { CategoriesModel } from '../../interfaces/categories-model';
+import { CategoryService } from '../../services/category.service';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
