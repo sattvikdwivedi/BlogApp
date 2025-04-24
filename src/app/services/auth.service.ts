@@ -69,6 +69,7 @@ export class AuthService {
   }
 
   getLoggedInUserData(): Observable<any> {
+    console.log('Sending token:', localStorage.getItem('accessToken'));
     return this.$User.pipe(
       switchMap(u => {
 

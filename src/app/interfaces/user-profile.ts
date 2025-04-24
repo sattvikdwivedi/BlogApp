@@ -1,20 +1,20 @@
 import { Subscription } from "rxjs";
 
 export interface UserProfile {
-    sub: Subscription,
-    error: string,
-    loading: boolean,
+    sub?: Subscription | null, // ← allow undefined or null
+    error?: string | null,
+    loading?: boolean | null,
     data: {
-        img?: string,
-        _id: string,
-        email?: string,
-        first_name: string,
-        last_name?: string,
-        role: string,
-        joined?: string,
-        job?: string,
-        address?: string,
-        about?: string
+        img?: string | null,
+        _id: string |null,
+        email?: string |null,
+        first_name: string |null,
+        last_name?: string |null,
+        role: string |null,
+        joined?: string|null,
+        job?: string|null,
+        address?: string|null,
+        about?: string|null
     },
     hasReact?: string
 }

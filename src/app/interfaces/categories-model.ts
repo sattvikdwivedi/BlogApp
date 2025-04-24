@@ -1,8 +1,8 @@
 import { Subscription } from "rxjs";
 
 export interface CategoriesModel {
-    sub: Subscription,
-    error: string,
+    sub: Subscription | null,
+    error: string|null,
     loading: boolean,
     items: {
         _id: string,

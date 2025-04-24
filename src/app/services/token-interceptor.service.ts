@@ -11,8 +11,8 @@ import { LocalStorageService } from './local-storage.service';
 })
 export class TokenInterceptorService implements HttpInterceptor {
 
-  private refreshingInProgress: boolean;
-  private accessTokenSubject: BehaviorSubject<string> = new BehaviorSubject<string>(null);
+  private refreshingInProgress: boolean | undefined;
+  private accessTokenSubject: BehaviorSubject<string> = new BehaviorSubject<string>('');
 
   constructor(
     private _localStorageService: LocalStorageService,
@@ -29,28 +29,29 @@ export class TokenInterceptorService implements HttpInterceptor {
     .pipe(
       catchError(err => {
 
-        if( err instanceof HttpErrorResponse && err.status == 401 ) {
+        if (err instanceof HttpErrorResponse && err.status == 401) {
 
           const refreshToken = this._localStorageService.getFreshToken();
-          if( accessToken && refreshToken ) {
+          if (accessToken && refreshToken) {
             return this.refreshToken(req, next);
           }
+          return throwError(err); // Ensure a return value here
 
-        } else if( err instanceof HttpErrorResponse && err.status == 403 ) {
+        } else if (err instanceof HttpErrorResponse && err.status == 403) {
 
           return this.logoutAndRedirect(err);
 
         } else {
 
           return throwError(err);
-          
+
         }
 
       })
     )
   }
 
-  addAccessTokenHeader(req, accessToken) {
+  addAccessTokenHeader(req:any, accessToken:any) {
     req = req.clone({
       headers: req.headers.set('Authorization', `Bearer ${accessToken}`)
     });
@@ -67,7 +68,7 @@ export class TokenInterceptorService implements HttpInterceptor {
     if( !this.refreshingInProgress ) {
 
       this.refreshingInProgress = true;
-      this.accessTokenSubject.next(null);
+      this.accessTokenSubject.next('');
 
       return this._authService.refreshToken()
       .pipe(

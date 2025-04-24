@@ -1,17 +1,22 @@
 import { Routes } from '@angular/router';
 import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
+import { NoAuthGuard } from './guards/no-auth.guard';
+import { ProfileComponent } from './profile/profile.component';
+import { AllBlogsComponent } from './all-blogs/all-blogs.component';
 
 export const routes: Routes = [
-  { path: 'login', component: LoginComponent },
+  { path: '', redirectTo: '/signup', pathMatch: 'full' },
+  { path: 'signup', component: SignupComponent, canActivate: [NoAuthGuard] },
+  { path: 'login', component: LoginComponent, canActivate: [NoAuthGuard] },
+  { path: 'profile/:bloggerId', component: ProfileComponent },
+  { path: 'profile/:bloggerId/:categoryId', component: ProfileComponent },
   {
-    path: '',
-    redirectTo: '/signup',
-    pathMatch: 'full'
+    path: 'all_blogs/:categoryId',
+    component: AllBlogsComponent,
   },
   {
-    path: 'signup',
-    component: SignupComponent,
+    path: 'all_blogs',
+    component: AllBlogsComponent,
   },
-  // other routes...
-  ];
+];

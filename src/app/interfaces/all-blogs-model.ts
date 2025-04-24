@@ -1,8 +1,8 @@
 import { Subscription } from "rxjs";
 
 export interface AllBlogsModel {
-    sub: Subscription,
-    error: string,
+    sub: Subscription|null,
+    error: string |null,
     loading: boolean,
     items: any[],
     totalBlogs: number,
