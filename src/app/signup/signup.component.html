@@ -1,0 +1,48 @@
+<div class="auth-wrapper">
+    <div class="signup-card">
+      <div class="signup-intro text-center">
+        <h1>Welcome to Arverse Blog ✍️</h1>
+        <p>Join our community of storytellers and share your thoughts with the world.</p>
+      </div>
+      
+      <form #signupForm="ngForm" (ngSubmit)="signUp()" class="row g-3 mx-auto mt-2 maxW400 transparent-form">
+  
+        <div class="col-md-6 col-12">
+          <label class="form-label">First name*</label>
+          <input type="text" class="form-control" required [class.is-invalid]="first_name.touched && first_name.invalid"
+            #first_name="ngModel" [(ngModel)]="signupData.data.first_name" name="first_name">
+          <small *ngIf="first_name.touched && first_name.invalid" class="text-danger">Required</small>
+        </div>
+  
+        <div class="col-md-6 col-12">
+          <label class="form-label">Last name*</label>
+          <input type="text" class="form-control" required [class.is-invalid]="last_name.touched && last_name.invalid"
+            #last_name="ngModel" [(ngModel)]="signupData.data.last_name" name="last_name">
+          <small *ngIf="last_name.touched && last_name.invalid" class="text-danger">Required</small>
+        </div>
+  
+        <div class="col-12">
+          <label class="form-label">Email address*</label>
+          <input type="email" class="form-control" required [class.is-invalid]="email.touched && email.invalid"
+            #email="ngModel" [(ngModel)]="signupData.data.email" name="email">
+          <small *ngIf="email.touched && email.invalid" class="text-danger">Required</small>
+        </div>
+  
+        <div class="col-12">
+          <label class="form-label">Password*</label>
+          <input type="password" class="form-control" required [class.is-invalid]="password.touched && password.invalid"
+            #password="ngModel" [(ngModel)]="signupData.data.password" name="password">
+          <small *ngIf="password.touched && password.invalid" class="text-danger">Required</small>
+          <small *ngIf="signupData.error" class="text-danger">{{ signupData.error }}</small>
+        </div>
+  
+        <div class="d-grid gap-2">
+          <button class="btn btn-dark" type="submit" [disabled]="signupForm.invalid || signupData.loading">
+            {{ signupData.loading ? 'Signing up...' : 'Signup for free' }}
+          </button>
+          <a class="btn btn-sm btnLight" routerLink="/login">Already have an account? Log in</a>
+        </div>
+      </form>
+    </div>
+  </div>
+  

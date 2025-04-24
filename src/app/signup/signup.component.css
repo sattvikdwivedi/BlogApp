@@ -1,0 +1,119 @@
+/* Center layout with background image */
+.auth-wrapper {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-image: url('assests/Background.jpg'); /* 🔁 Replace with your image path */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    padding: 2rem;
+    position: relative;
+  }
+  
+  /* Optional overlay for better text visibility */
+  .auth-wrapper::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5); /* You can adjust this */
+    z-index: 1;
+  }
+  
+  /* Signup card */
+  .signup-card {
+    position: relative;
+    z-index: 2;
+    background-color: rgba(173, 216, 230, 0.8); /* Light blue with 80% opacity */
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    padding: 2.5rem;
+    border-radius: 20px;
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.08);
+    max-width: 600px;
+    width: 100%;
+}
+  
+  /* Intro text */
+  .signup-intro h1 {
+    font-weight: 700;
+    color: #343a40;
+    margin-bottom: 1rem;
+  }
+  
+  .signup-intro p {
+    color: #6c757d;
+    font-size: 1.1rem;
+    margin-bottom: 2rem;
+  }
+  
+  /* Form spacing */
+  form .form-label {
+    font-weight: 500;
+    margin-bottom: 0.3rem;
+  }
+  
+  .form-control {
+    border-radius: 10px;
+    padding: 0.75rem;
+    border: 1px solid #ced4da;
+  }
+  
+  .form-control:focus {
+    border-color: #6c63ff;
+    box-shadow: 0 0 0 0.2rem rgba(108, 99, 255, 0.25);
+  }
+  
+  /* Buttons */
+  .btn-dark {
+    background-color: #212529;
+    border: none;
+    padding: 0.75rem;
+    border-radius: 10px;
+    transition: background 0.3s;
+  }
+  
+  .btn-dark:hover {
+    background-color: #101214;
+  }
+  
+  .btnLight {
+    background-color: #ffffff;
+    color: #212529;
+    border: 1px solid #ced4da;
+    padding: 0.5rem 1rem;
+    border-radius: 10px;
+  }
+  
+  .btnLight:hover {
+    background-color: #f1f3f5;
+  }
+  
+  /* Responsive tweaks */
+  @media (max-width: 576px) {
+    .signup-card {
+      padding: 1.5rem;
+    }
+  
+    .signup-intro h1 {
+      font-size: 1.75rem;
+    }
+  
+    .signup-intro p {
+      font-size: 1rem;
+    }
+    .transparent-form {
+        background-color: rgba(173, 216, 230, 0.8); /* Light blue with 80% opacity */
+        backdrop-filter: blur(10px); /* Optional: glassmorphism effect */
+        -webkit-backdrop-filter: blur(10px); /* Safari support */
+        border-radius: 1rem;
+        padding: 2rem;
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+  }
+  
