@@ -5,6 +5,8 @@ import { NoAuthGuard } from './guards/no-auth.guard';
 import { ProfileComponent } from './profile/profile.component';
 import { AllBlogsComponent } from './all-blogs/all-blogs.component';
 import { ContactComponent } from './contact/contact.component';
+import { ProfileEditComponent } from './profile-edit/profile-edit.component';
+import { AuthGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/signup', pathMatch: 'full' },
@@ -24,5 +26,11 @@ export const routes: Routes = [
     path: 'contact',
     component: ContactComponent
   }
+  ,
+  {
+    path: 'profile_edit',
+    component: ProfileEditComponent,
+    canActivate: [AuthGuard]
+  },
   
 ];
