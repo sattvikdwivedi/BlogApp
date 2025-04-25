@@ -4,6 +4,7 @@ import { SignupComponent } from './signup/signup.component';
 import { NoAuthGuard } from './guards/no-auth.guard';
 import { ProfileComponent } from './profile/profile.component';
 import { AllBlogsComponent } from './all-blogs/all-blogs.component';
+import { ContactComponent } from './contact/contact.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/signup', pathMatch: 'full' },
@@ -19,5 +20,9 @@ export const routes: Routes = [
     path: 'all_blogs',
     component: AllBlogsComponent,
   },
+  {
+    path: 'contact',
+    component: ContactComponent
+  }
   
 ];
