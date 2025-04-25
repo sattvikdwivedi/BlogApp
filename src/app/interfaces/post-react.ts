@@ -1,11 +1,11 @@
 import { Subscription } from "rxjs";
 
 export interface PostReact {
-    sub: Subscription,
-    error: string,
-    loading: boolean,
+    sub: Subscription |null,
+    error: string |null,
+    loading: boolean ,
     body: {
-        blogId: string,
-        reactName: string
+        blogId: string |null,
+        reactName: string |null
     }
 }

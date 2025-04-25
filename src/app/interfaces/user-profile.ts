@@ -16,5 +16,5 @@ export interface UserProfile {
         address?: string|null,
         about?: string|null
     },
-    hasReact?: string
+    hasReact?: string |null
 }

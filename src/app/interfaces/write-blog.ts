@@ -1,13 +1,13 @@
 import { Subscription } from "rxjs";
 
 export interface WriteBlog {
-    sub: Subscription,
-    error: string,
+    sub: Subscription | null,
+    error: string | null,
     loading: boolean,
     data: {
-        title: string,
-        category: string,
-        body: string,
-        img: string,
+        title: string| null,
+        category: string| null,
+        body: string| null,
+        img: string| null,
     }
 }
