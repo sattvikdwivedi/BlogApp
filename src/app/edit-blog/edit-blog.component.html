@@ -1,0 +1,72 @@
+<div class="container">
+    <div class="row py-5">
+      <div class="col-md-8 mx-auto">
+        <h2 class="mb-4">Edit Blog Post</h2>
+        
+        <div *ngIf="blog.loading" class="text-center py-5">
+          <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+          <p class="mt-2">Loading blog details...</p>
+        </div>
+  
+        <div *ngIf="blog.error" class="alert alert-danger">
+          {{ blog.error }}
+        </div>
+  
+        <form #blogForm="ngForm" (ngSubmit)="updateBlog(blogForm)" *ngIf="!blog.loading && blog.data">
+          <!-- Title -->
+          <div class="mb-3">
+            <label for="blogTitle" class="form-label">Blog Title*</label>
+            <input type="text" class="form-control" id="blogTitle" 
+                   required [(ngModel)]="blog.data.title" name="title"
+                   [class.is-invalid]="blogForm.submitted && blogForm.controls['title'].invalid">
+            <div class="invalid-feedback" *ngIf="blogForm.submitted && blogForm.controls['title'].invalid">
+              Title is required
+            </div>
+          </div>
+  
+          <!-- Category -->
+          <div class="mb-3">
+            <label for="blogCategory" class="form-label">Category*</label>
+            <select class="form-select" id="blogCategory" 
+                    required [(ngModel)]="blog.data.category" name="category"
+                    [class.is-invalid]="blogForm.submitted && blogForm.controls['category'].invalid">
+              <option value="">Select a category</option>
+              <option *ngFor="let category of categoryList.items" [value]="category._id">
+                {{ category.name | titlecase }}
+              </option>
+            </select>
+            <div class="invalid-feedback" *ngIf="blogForm.submitted && blogForm.controls['category'].invalid">
+              Category is required
+            </div>
+          </div>
+  
+          <!-- Content -->
+          <div class="mb-4">
+            <label for="blogContent" class="form-label">Blog Content*</label>
+            <textarea class="form-control" id="blogContent" rows="10" 
+                      required [(ngModel)]="blog.data.body" name="body"
+                      [class.is-invalid]="blogForm.submitted && blogForm.controls['body'].invalid"></textarea>
+            <div class="invalid-feedback" *ngIf="blogForm.submitted && blogForm.controls['body'].invalid">
+              Content is required
+            </div>
+          </div>
+  
+          <!-- Buttons -->
+          <div class="d-flex justify-content-between">
+            <button type="button" class="btn btn-outline-secondary" routerLink="/blog/{{blogId}}">
+              Cancel
+            </button>
+            <button type="submit" class="btn btn-primary" [disabled]="blog.loading">
+              <span *ngIf="!blog.loading">Update Blog</span>
+              <span *ngIf="blog.loading" class="d-flex align-items-center">
+                <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                Updating...
+              </span>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>

@@ -9,6 +9,7 @@ import { ProfileEditComponent } from './profile-edit/profile-edit.component';
 import { AuthGuard } from './guards/auth.guard';
 import { WriteBlogComponent } from './write-blog/write-blog.component';
 import { BlogComponent } from './blog/blog.component';
+import { EditBlogComponent } from './edit-blog/edit-blog.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/signup', pathMatch: 'full' },
@@ -43,4 +44,7 @@ export const routes: Routes = [
     path: 'blog/:blogId',
     component: BlogComponent
   },
+
+  { path: 'edit-blog/:id', component: EditBlogComponent }
+
 ];

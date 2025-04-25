@@ -1,51 +1,40 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="container">
+  <div class="container">
+    <a class="navbar-brand" routerLink="/">Arverse Blog</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" 
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
 
-      <a class="navbar-brand" routerLink="/">Arverse Blog </a>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item" *ngIf="!isLoading && !(User$ | async) && (page | async) !== 'login'">
+          <a class="nav-link" routerLink="/login" routerLinkActive="active">Login</a>
+        </li>
 
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
+        <li class="nav-item" *ngIf="!isLoading && !(User$ | async) && (page | async) !== 'signup'">
+          <a class="nav-link" routerLink="/signup" routerLinkActive="active">Signup</a>
+        </li>
 
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/all_blogs" routerLinkActive="active">All blogs</a>
+        </li>
 
-          <li class="nav-item" [hidden]="(page | async) == 'login' || (User | async)">
-            <a class="nav-link" routerLink="/login" routerLinkActive="active" aria-current="page">Login</a>
-          </li>
+        <li class="nav-item" *ngIf="User$ | async">
+          <a class="nav-link" routerLink="/write_blog" routerLinkActive="active">Write blog</a>
+        </li>
+      </ul>
 
-          <li class="nav-item" [hidden]="(page | async) == 'signup' || (User | async)">
-            <a class="nav-link" routerLink="/signup" routerLinkActive="active">Signup</a>
-          </li>
-
-          <li class="nav-item">
-            <a class="nav-link" routerLink="/all_blogs" routerLinkActive="active">All blogs</a>
-          </li>
-
-          <li class="nav-item" [hidden]="!(User | async)">
-            <a class="nav-link" routerLink="/write_blog" routerLinkActive="active">Write blog</a>
-          </li>
-
-        </ul>
-
-        <ul class="navbar-nav ms-auto mb-2 mb-lg-0" *ngIf="(User | async)">
-
-          <!-- <li class="nav-item">
-            <a class="nav-link me-2" [routerLink]="['/profile', (User | async)._id]" routerLinkActive="active" aria-current="page">
-            {{ (User | async).first_name }}
-            </a>
-          </li> -->
-          <ng-container *ngIf="User | async as user">
-            <a [routerLink]="['/profile', user._id]" routerLinkActive="active">Profile</a>
+      <ul class="navbar-nav ms-auto mb-2 mb-lg-0" *ngIf="User$ | async as user">
+        <li class="nav-item">
+          <a class="nav-link" [routerLink]="['/profile', user._id]" routerLinkActive="active">
             {{ user.first_name }}
-          </ng-container>
-          
-
-          <li class="nav-item">
-            <a class="nav-link btn-logout" (click)="logout()">Logout</a>
-          </li>
-
-        </ul>
-      </div>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link btn-logout" (click)="logout()">Logout</a>
+        </li>
+      </ul>
     </div>
-  </nav>
+  </div>
+</nav>

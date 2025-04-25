@@ -1,17 +1,22 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError } from 'rxjs/operators';
 import { environment } from '../../environment/environment';
 import { ErrorService } from './error.service';
+import { LocalStorageService } from './local-storage.service';
+import { Observable, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BlogService {
+  apiUrl: any;
 
   constructor(
     private _http: HttpClient,
-    private _errorService: ErrorService
+    private _errorService: ErrorService,
+    private _localStorageService: LocalStorageService,
+    
   ) { }
 
   writeBlog(data:any) {
@@ -48,5 +53,47 @@ export class BlogService {
       catchError(err => this._errorService.handleError(err))
     );
   }
+  deleteBlogAsAdmin(blogId: string) {
+    const accessToken = this._localStorageService.getAccessToken();
+    console.log("tokenDuringDel", accessToken);
+    const headers = {
+      'Authorization': `Bearer ${accessToken}`  // Add Authorization header with Bearer token
+    };
+    
+    return this._http.delete(`${environment.apiUrl}/admin/posts/${blogId}`, { headers })
+      .pipe(
+        catchError(err => this._errorService.handleError(err))
+      );
+  }
+
+  getBlogById(id: string): Observable<any> {
+    return this._http.get(`${environment.apiUrl}/blog/${id}`).pipe(
+      catchError(this.handleError)
+    );
+  }
+  
+  updateBlog(id: string, formData: FormData): Observable<any> {
+    const token = this._localStorageService.getAccessToken();
+    const headers = {
+      'Authorization': `Bearer ${token}`
+    };
+    return this._http.put(`${environment.apiUrl}/blog/update/${id}`, formData, { headers }).pipe(
+      catchError(this.handleError)
+    );
+  }
+  
+  private handleError(error: HttpErrorResponse) {
+    let errorMessage = 'An unknown error occurred';
+    if (error.error instanceof ErrorEvent) {
+      // Client-side error
+      errorMessage = `Error: ${error.error.message}`;
+    } else {
+      // Server-side error
+      errorMessage = error.error.message || error.message;
+    }
+    return throwError(errorMessage);
+  }
+  
+  
 
 }

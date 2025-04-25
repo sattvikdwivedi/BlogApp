@@ -13,12 +13,21 @@ import { LocalStorageService } from './local-storage.service';
 export class AuthService {
 
   $User: BehaviorSubject<User | null> = new BehaviorSubject<User | null>(null);
+  private _userSubject = new BehaviorSubject<any>(null); // Make sure to initialize it with the current user or null.
+
 
   constructor(
     private _http: HttpClient,
     private _localStorageService: LocalStorageService,
     private _errorService: ErrorService
-  ) { }
+  ) { 
+   this.loadUser();
+  }
+  loadUser() {
+    // Assuming you're storing user data in localStorage or sessionStorage.
+    const user = JSON.parse(localStorage.getItem('user') || 'null');
+    this._userSubject.next(user);
+  }
 
   signUp(data:any): Observable<any> {
     return this._http.post<any>(`${environment.apiUrl}/user/register`, data)
@@ -104,6 +113,11 @@ export class AuthService {
     .pipe(
       catchError(err => this._errorService.handleError(err))
     )
+  }
+  canEditOrDelete(blogOwnerId: string): boolean {
+    const user = this.$User.getValue();
+    if (!user) return false; // If no user is logged in, can't edit or delete
+    return user._id === blogOwnerId || user.role === 'admin'; // Check if the user is the blog owner or admin
   }
 
 }
