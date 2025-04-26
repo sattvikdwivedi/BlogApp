@@ -10,6 +10,8 @@ import { AuthGuard } from './guards/auth.guard';
 import { WriteBlogComponent } from './write-blog/write-blog.component';
 import { BlogComponent } from './blog/blog.component';
 import { EditBlogComponent } from './edit-blog/edit-blog.component';
+import { AdminDashboardComponent } from './admin/dashboard/dashboard.component';
+import { AdminGuard } from './guards/admin.guard';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/signup', pathMatch: 'full' },
@@ -45,6 +47,12 @@ export const routes: Routes = [
     component: BlogComponent
   },
 
-  { path: 'edit-blog/:id', component: EditBlogComponent }
+  { path: 'edit-blog/:id', component: EditBlogComponent},
+  {
+    path: 'admin/dashboard',
+    component: AdminDashboardComponent,
+    canActivate: [AdminGuard] // Protect route (optional but recommended)
+  }
+  
 
 ];

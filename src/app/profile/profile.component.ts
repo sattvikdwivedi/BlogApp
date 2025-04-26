@@ -11,11 +11,15 @@ import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { CategoryComponentComponent } from '../common/category/category.component';
+import {  ToastrService  } from 'ngx-toastr';
+
 
 @Component({
   selector: 'app-profile',
   standalone: true,
-  imports: [CommonModule, FormsModule,RouterModule ,CategoryComponentComponent],
+  imports: [CommonModule, FormsModule, RouterModule, CategoryComponentComponent,
+
+  ],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.css'
 })
@@ -55,8 +59,8 @@ export class ProfileComponent implements OnInit {
   constructor(
     private _authService: AuthService,
     private _route: ActivatedRoute,
-    private _blogService: BlogService
-    ) { }
+    private _blogService: BlogService,
+    private toastr: ToastrService  ) { }
     
   ngOnInit(): void {
 
@@ -81,7 +85,6 @@ export class ProfileComponent implements OnInit {
   }
 
   getBloggerProfile(bloggerId: string) {
-
     this.User = this._authService.$User.pipe(
       filter((user): user is User => user !== null)
     );    this.bloggerProfile.loading = true;
@@ -122,6 +125,7 @@ export class ProfileComponent implements OnInit {
       this.bloggerAllBlogs.loading = false;
       this.bloggerAllBlogs.sub?.unsubscribe();
 
+
     }, err => {
       
       this.bloggerAllBlogs.error = err;
@@ -158,5 +162,26 @@ export class ProfileComponent implements OnInit {
     });
 
   }
+  deleteBlog(blogId: string) {
+    if (confirm('Are you sure you want to delete this blog?')) {
+      this._blogService.deleteBlogAsAdmin(blogId).subscribe({
+        next: (res) => {
+          // Successfully deleted
+          alert("Blog Deleled successfully")
+          this.toastr.success('Blog deleted successfully!', 'Success', {
+            timeOut: 3000,
+            positionClass: 'toast-top-right',
+            progressBar: true
+          });
+          this.getBloggerBlogs(this.bloggerProfile.data._id ?? '', this.categoryId); // Refresh blogs
+        },
+        error: (err) => {
+          console.error(err);
+          alert('Failed to delete blog. Please try again.');
+        }
+      });
+    }
+  }
+  
 
 }

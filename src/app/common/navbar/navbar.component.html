@@ -31,6 +31,9 @@
             {{ user.first_name }}
           </a>
         </li>
+        <li class="nav-item" *ngIf="user.role === 'admin'">
+          <a class="nav-link" routerLink="/admin/dashboard" routerLinkActive="active">Admin Dashboard</a>
+        </li>
         <li class="nav-item">
           <a class="nav-link btn-logout" (click)="logout()">Logout</a>
         </li>

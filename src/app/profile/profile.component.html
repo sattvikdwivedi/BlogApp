@@ -91,6 +91,23 @@
                                   {{ blog.title }}
                                 </a>
                               </h5>
+                              <div *ngIf="(User | async) as user" class="mt-3">
+                                <button 
+                                  *ngIf="user._id === blog.writter._id" 
+                                  class="btn btn-sm btn-primary me-2"
+                                  [routerLink]="['/edit-blog', blog._id]"
+                                >
+                                  <i class="fa fa-pencil" aria-hidden="true"></i> Edit
+                                </button>
+                            
+                                <button 
+                                  *ngIf="user._id === blog.writter._id" 
+                                  (click)="deleteBlog(blog._id)"
+                                  class="btn btn-sm btn-danger"
+                                >
+                                  <i class="fa fa-trash" aria-hidden="true"></i> Delete
+                                </button>
+                              </div>
                               
                               <p class="card-text">
                                 <i class="fa fa-user-circle-o" aria-hidden="true"></i> {{ blog.writter.first_name }}

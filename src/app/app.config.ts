@@ -2,17 +2,23 @@ import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
-
+import { importProvidersFrom } from '@angular/core';
 import { routes } from './app.routes';
 import { TokenInterceptorService } from '../app/services/token-interceptor.service';
+import { ToastrModule } from 'ngx-toastr';
+import { provideAnimations } from '@angular/platform-browser/animations';
+
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
-    
+    importProvidersFrom(ToastrModule.forRoot()),
+    provideAnimations(),
+
     // Enables DI-based interceptors
     provideHttpClient(withInterceptorsFromDi()),
+    
 
     // Registers the token interceptor
     {

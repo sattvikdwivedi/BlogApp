@@ -95,7 +95,6 @@ export class AllBlogsComponent implements OnInit {
   }
 
   deleteBlog(blogId: string) {
-    console.log(blogId,"blogId")
     if (confirm('Are you sure you want to delete this blog?')) {
       this._blogService.deleteBlogAsAdmin(blogId).subscribe(async () => {
         await this.getAllBlogs(); // reload list
