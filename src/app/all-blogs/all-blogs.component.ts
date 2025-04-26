@@ -17,10 +17,9 @@ import { CategoryService } from '../services/category.service';
   styleUrls: ['./all-blogs.component.css']
 })
 export class AllBlogsComponent implements OnInit {
-
   apiUrl: any;
   isAdmin: boolean = false;
-
+  
   allBlogs: AllBlogsModel = {
     sub: null,
     error: null,
@@ -28,12 +27,13 @@ export class AllBlogsComponent implements OnInit {
     items: [],
     totalBlogs: 0,
     totalPages: [],
-    currentPage: 0
+    currentPage: 0,
+    status:"",
   }
-
+  
   currentCategoryId: string = 'all';
   currentUserId: string = ''
-
+  
   constructor(
     private _blogService: BlogService,
     private _authService: AuthService, 
@@ -41,24 +41,24 @@ export class AllBlogsComponent implements OnInit {
     private _route: ActivatedRoute,
     private _categoryService: CategoryService,
   ) {}
-
+  
   ngOnInit(): void {
     const user = this._authService.$User.getValue();
     this.isAdmin = user?.role === 'admin';
     this.currentUserId = user?._id || '';
-
+    
     this._route.params.subscribe((params) => {
       this.currentCategoryId = params['categoryId'] || 'all';
       this.getAllBlogs();
     });
   }
-
+  
   categories: any[] = [];
-
+  
   getAllBlogs() {
     this.allBlogs.loading = true;
     this.allBlogs.error = null;
-
+     console.log(this.allBlogs,"fsd")
     this.allBlogs.sub = this._blogService.getblogList('all', this.currentCategoryId)
       .subscribe((res: any) => {
         this.allBlogs.items = res.result;
@@ -67,6 +67,7 @@ export class AllBlogsComponent implements OnInit {
         this.allBlogs.totalPages = Array(res.totalPages).fill(5).map((_, i) => i);
         this.allBlogs.loading = false;
         this.allBlogs.sub?.unsubscribe();
+        this.allBlogs.status=res.status;
       }, err => {
         this.allBlogs.error = err;
         this.allBlogs.loading = false;

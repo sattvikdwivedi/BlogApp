@@ -48,7 +48,8 @@ export class ProfileComponent implements OnInit {
     items: [],
     totalBlogs: 0,
     totalPages: [],
-    currentPage: 0
+    currentPage: 0,
+    status:''
   }
   
   constructor(

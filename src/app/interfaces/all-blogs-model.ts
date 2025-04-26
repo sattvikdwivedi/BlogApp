@@ -7,5 +7,6 @@ export interface AllBlogsModel {
     items: any[],
     totalBlogs: number,
     totalPages: number[],
-    currentPage: number
+    currentPage: number,
+    status:string,
 }

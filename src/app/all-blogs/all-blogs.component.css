@@ -6,4 +6,7 @@
   .admin-actions button:last-child {
     margin-right: 0;
   }
-  
+  .card-text {
+    font-size: 0.9rem;
+    color: #555;
+  }

@@ -54,6 +54,18 @@
                     <i class="fa fa-eye me-1"></i> View
                   </button>
                 </div>
+                <p class="card-text">
+                  <i class="fa fa-calendar" aria-hidden="true"></i>
+                  {{ blog.posted | date: 'mediumDate' }}
+                  <br>
+                  <i class="fa fa-flag" aria-hidden="true"></i>
+                  <span [ngClass]="{
+                    'text-success': blog.status === 'Published',
+                    'text-warning': blog.status === 'Draft'
+                  }">
+                    {{ blog.status}}
+                  </span>
+                </p>
 
                 <p class="card-text">
                   <i class="fa fa-user-circle-o" aria-hidden="true"></i> {{ blog.writter.first_name }}
