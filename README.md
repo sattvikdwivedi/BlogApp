@@ -5,6 +5,8 @@ This project is a **Blog Management System** that includes both a backend (Node.
 ---
 
 Link For Backend: https://github.com/sattvikdwivedi/Blog-Backend
+Deployed Link (Frontend):https://blog-app-sattvik.vercel.app
+Deployed Link(Backend):https://blog-backend-sattvik.vercel.app/
 
 ## Setup Instructions
 
@@ -108,6 +110,9 @@ Approximately **21 hours**.
 - Improve UI/UX with a more modern design.
 
 ---
+
+
+
 
 ## License
 This project is licensed under the MIT License.
