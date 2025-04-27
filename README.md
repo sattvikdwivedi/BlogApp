@@ -28,7 +28,7 @@ Deployed Link(Backend):https://blog-backend-sattvik.vercel.app/
    ```
 3. Create a `.env` file in the root of the backend directory and add the following:
    ```env
-   PORT=5000
+   PORT=3000
    MONGO_URI=<your_mongodb_connection_string>
    CLOUDINARY_CLOUD_NAME=<your_cloudinary_cloud_name>
    CLOUDINARY_API_KEY=<your_cloudinary_api_key>
