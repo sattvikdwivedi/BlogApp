@@ -244,7 +244,6 @@ filteredBlogs: any[] = [];
 
 // Add this method to filter blogs by status
 filterBlogsByStatus() {
-  debugger;
   if (this.selectedStatus === 'all') {
     this.filteredBlogs = [...this.bloggerAllBlogs.items];
   } else {
@@ -256,7 +255,6 @@ filterBlogsByStatus() {
 
 // Update your getBloggerBlogs method to initialize filteredBlogs
 getBloggerBlogs(bloggerId: string, categoryId: string) {
-  debugger
   this.bloggerAllBlogs.loading = true;
   this.bloggerAllBlogs.error = null;
   console.log(this._blogService.getblogList(bloggerId, categoryId),"all")
