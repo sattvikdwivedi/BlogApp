@@ -50,7 +50,7 @@
 
             <!-- reacts -->
             <hr class="mt-4">
-            <div class="react-section" *ngIf="blog.data.reacts">
+            <div class="react-section" *ngIf="blog.data.reacts && blog.data.status == 'Published'">
                 <a class="btn reactBtn" [class.reacted]="User.hasReact == 'like'" (click)="doReact('like')">
                     <i class="fa fa-thumbs-up-o" aria-hidden="true"></i>
                      Like 
@@ -90,7 +90,7 @@
             <hr>
             
             <!-- write comment -->
-            <form class="row g-3 mb-3" #commentForm="ngForm" (ngSubmit)="doComment(commentForm)" *ngIf="User.data">
+            <form class="row g-3 mb-3" #commentForm="ngForm" (ngSubmit)="doComment(commentForm)" *ngIf="User.data && blog.data.status == 'Published'">
                 <div class="col-md-10 col-8">
                     <input type="text" [class.is-invalid]="comment.touched && comment.invalid" required #comment="ngModel" [(ngModel)]="postComment.body.body" name="comment" class="form-control" placeholder="Write comment...">
                     <small class="text-danger" *ngIf="comment.touched && comment.invalid">

@@ -3,7 +3,6 @@ import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
 import { NoAuthGuard } from './guards/no-auth.guard';
 import { ProfileComponent } from './profile/profile.component';
-import { AllBlogsComponent } from './all-blogs/all-blogs.component';
 import { ContactComponent } from './contact/contact.component';
 import { ProfileEditComponent } from './profile-edit/profile-edit.component';
 import { AuthGuard } from './guards/auth.guard';
@@ -12,6 +11,7 @@ import { BlogComponent } from './blog/blog.component';
 import { EditBlogComponent } from './edit-blog/edit-blog.component';
 import { AdminDashboardComponent } from './admin/dashboard/dashboard.component';
 import { AdminGuard } from './guards/admin.guard';
+import { AllBlogsComponent } from './all-blogs/all-blogs.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/signup', pathMatch: 'full' },

@@ -31,6 +31,8 @@ export class AllBlogsComponent implements OnInit {
     status:"",
   }
   
+  categories: any[] = [];
+  publishedBlogs: any[] = [];
   currentCategoryId: string = 'all';
   currentUserId: string = ''
   
@@ -49,42 +51,26 @@ export class AllBlogsComponent implements OnInit {
     
     this._route.params.subscribe((params) => {
       this.currentCategoryId = params['categoryId'] || 'all';
-      this.getAllBlogs();
+      this.getAllBlogs(1);
     });
   }
   
-  categories: any[] = [];
+
   
-  getAllBlogs() {
+  getAllBlogs(page: number = 1) {
     this.allBlogs.loading = true;
     this.allBlogs.error = null;
-     console.log(this.allBlogs,"fsd")
-    this.allBlogs.sub = this._blogService.getblogList('all', this.currentCategoryId)
+  
+    this.allBlogs.sub = this._blogService.getblogList('all', 'all', page,'Published')
       .subscribe((res: any) => {
         this.allBlogs.items = res.result;
         this.allBlogs.totalBlogs = res.totalBlogs;
         this.allBlogs.currentPage = res.currentPage;
-        this.allBlogs.totalPages = Array(res.totalPages).fill(5).map((_, i) => i);
-        this.allBlogs.loading = false;
-        this.allBlogs.sub?.unsubscribe();
-        this.allBlogs.status=res.status;
-      }, err => {
-        this.allBlogs.error = err;
-        this.allBlogs.loading = false;
-        this.allBlogs.sub?.unsubscribe();
-      });
-  }
-
-  changePage(page: any) {
-    this.allBlogs.loading = true;
-    this.allBlogs.error = null;
-
-    this._blogService.getblogList('all', this.currentCategoryId, page)
-      .subscribe((res: any) => {
-        this.allBlogs.items = res.result;
-        this.allBlogs.totalBlogs = res.totalBlogs;
-        this.allBlogs.currentPage = res.currentPage;
-        this.allBlogs.totalPages = Array(res.totalPages).fill(5).map((_, i) => i);
+        this.allBlogs.totalPages = Array.from({ length: res.totalPages }, (_, i) => i + 1); // Correct way
+        this.allBlogs.status = res.status;
+        this.publishedBlogs = this.allBlogs.items.filter(blog => blog.status === 'Published');
+        console.log(this.publishedBlogs,"fdsnjdfsdfsfd")
+  
         this.allBlogs.loading = false;
         this.allBlogs.sub?.unsubscribe();
       }, err => {
@@ -93,6 +79,13 @@ export class AllBlogsComponent implements OnInit {
         this.allBlogs.sub?.unsubscribe();
       });
   }
+
+  changePage(page: number) {
+    if (page !== this.allBlogs.currentPage) {
+      this.getAllBlogs(page);
+    }
+  }
+  
 
   deleteBlog(blogId: string) {
     if (confirm('Are you sure you want to delete this blog?')) {

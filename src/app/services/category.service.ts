@@ -21,10 +21,15 @@ export class CategoryService {
     );
   }
 
-  getCategorizedBlogCount(bloggerId = 'all') {
-    return this._http.get(`${environment.apiUrl}/category/categorizedBlogs/${bloggerId}`)
-    .pipe(
-      catchError(err => this._errorService.handleError(err))
-    )
+  getCategorizedBlogCount(bloggerId = 'all',status?: string) {
+    let url = `${environment.apiUrl}/category/categorizedBlogs/${bloggerId}`;
+    if (status) {
+      url += `?status=${status}`;
+    }
+  
+    return this._http.get(url)
+      .pipe(
+        catchError(err => this._errorService.handleError(err))
+      );
   }
 }

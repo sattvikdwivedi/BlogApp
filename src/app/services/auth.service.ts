@@ -119,6 +119,24 @@ export class AuthService {
     if (!user) return false; // If no user is logged in, can't edit or delete
     return user._id === blogOwnerId || user.role === 'admin'; // Check if the user is the blog owner or admin
   }
+  uploadProfilePicture(file: File,userId: string): Observable<any> {
+    const formData = new FormData();
+    formData.append('img', file);
+    formData.append('userId', userId);
+    
 
+  
+    return this._http.put(`${environment.apiUrl}/user/uploadProfilePicture`, formData)
+      .pipe(
+        tap((res: any) => {
+          // Update the User BehaviorSubject if needed
+          if (res?.user) {
+            this.$User.next(res.user);
+          }
+        }),
+        catchError(err => this._errorService.handleError(err))
+      );
+  }
+  
 }
 

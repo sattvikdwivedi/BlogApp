@@ -40,11 +40,26 @@ export class BlogService {
     );
   }
 
-  getblogList(bloggerId:String, categoryId:String, page = 1) {
-    return this._http.get(`${environment.apiUrl}/blog/${bloggerId}/${categoryId}?page=${page}`)
-    .pipe(
-      catchError(err => this._errorService.handleError(err))
-    );
+  getblogList(bloggerId: String, categoryId: String, page = 1, status?: String) {
+    let url = `${environment.apiUrl}/blog/${bloggerId}/${categoryId}?page=${page}`;
+    
+    // If status is provided, add it to the query string
+    if (status) {
+      url += `&status=${status}`;
+    }
+  
+    return this._http.get(url)
+      .pipe(
+        catchError(err => this._errorService.handleError(err))
+      );
+  }
+  
+
+  getPublishedBlogList(bloggerId: String, categoryId: String, page = 1) {
+    return this._http.get(`${environment.apiUrl}/blog/published/${bloggerId}/${categoryId}?page=${page}`)
+      .pipe(
+        catchError(err => this._errorService.handleError(err))
+      );
   }
 
   getBlogDetails(blogId:string) {
@@ -55,7 +70,6 @@ export class BlogService {
   }
   deleteBlogAsAdmin(blogId: string) {
     const accessToken = this._localStorageService.getAccessToken();
-    console.log("tokenDuringDel", accessToken);
     const headers = {
       'Authorization': `Bearer ${accessToken}`  // Add Authorization header with Bearer token
     };

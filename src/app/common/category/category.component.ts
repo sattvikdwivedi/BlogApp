@@ -17,6 +17,7 @@ export class CategoryComponentComponent implements OnInit {
   @Input() categoryId!: string;
   @Input() bloggerName!: string;
   @Input() bloggerId?: any;
+  @Input() status: string = 'all';     // default 'all'
 
   sectionTitle: string | undefined;
   categories: CategoriesModel = {
@@ -63,10 +64,11 @@ export class CategoryComponentComponent implements OnInit {
   }
 
   getCategorizedBlogsCount() {
+    debugger;
     this.categories.loading = true;
     this.categories.error = null;
 
-    this.categories.sub = this._categoryService.getCategorizedBlogCount(this.bloggerId)
+    this.categories.sub = this._categoryService.getCategorizedBlogCount(this.bloggerId,this.status)
     .subscribe((res:any) => {
 
       this.categories.items = res;

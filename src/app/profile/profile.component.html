@@ -1,137 +1,168 @@
 <div class="card bgLight">
-    <div class="container py-5">
-        <div class="card-body">
-            <p *ngIf="bloggerProfile.loading">
-                Getting blogger data...
-            </p>
-            <small *ngIf="bloggerProfile.error" class="text-danger">
-               <b>ERROR</b> {{ bloggerProfile.error }}!
-            </small>
-            <div class="row profile" *ngIf="!bloggerProfile.error && !bloggerProfile.loading">
+  <div class="container py-5">
+    <div class="card-body">
+      <p *ngIf="bloggerProfile.loading">
+        Getting blogger data...
+      </p>
+      <small *ngIf="bloggerProfile.error" class="text-danger">
+        <b>ERROR</b> {{ bloggerProfile.error }}!
+      </small>
 
-                <div class="col-md-2 col-12 my-2">
-
-                    <div class="imgCap">
-                        <img [src]="bloggerProfile.data.img" alt="Blogger image">
-                    </div>
-                </div>
-
-                <div class="col-md-4 col-12 my-2" *ngIf="bloggerProfile.data">
-                    <h3>
-                        <b> {{ bloggerProfile.data.first_name }} </b> {{ bloggerProfile.data.last_name }}
-                    </h3>
-                    <h4>
-                        <i class="fa fa-user-circle-o me-1" aria-hidden="true"></i> 
-                        {{ bloggerProfile.data.job ? bloggerProfile.data.job : bloggerProfile.data.role }}
-                    </h4>
-                    <h4>
-                        <i class="fa fa-envelope me-1" aria-hidden="true"></i> {{ bloggerProfile.data.email }}
-                    </h4>
-                    <h4>
-                        <i class="fa fa-calendar-check-o me-1" aria-hidden="true"></i> {{ bloggerProfile.data.joined }}
-                    </h4>
-                    <h4 *ngIf="bloggerProfile.data.address">
-                        <i class="fa fa-map me-1" aria-hidden="true"></i> {{ bloggerProfile.data.address }}
-                    </h4>
-                </div>
-
-                <div class="col-md-6 col-12 my-2 borderLeft">
-                    <p class="d-none d-md-block" *ngIf="bloggerProfile.data.about">
-                        <b>About me:</b> {{ bloggerProfile.data.about }}
-                    </p>
-                    <a *ngIf="(User | async)" routerLink="/write_blog" class="btn btn-sm btn-dark me-2">Write new blog</a>
-                    <a *ngIf="(User | async)" routerLink="/profile_edit" class="btn btn-sm btn-light" routerLink="/profile_edit">Edit profile</a>
-                    <br>
-                </div>
-
-            </div>
+      <div class="row profile" *ngIf="!bloggerProfile.error && !bloggerProfile.loading">
+        
+        <div class="col-md-2 col-12 my-2">
+          <div class="imgCap text-center">
+            <img 
+              [src]="previewImg || bloggerProfile.data.img" 
+              alt="Blogger image" 
+              class="img-fluid rounded-circle" 
+              style="width: 150px; height: 150px; object-fit: cover;"
+            >
+            
+            
+            <input 
+              type="file" 
+              #fileInput 
+              accept="image/*" 
+              style="display: none;" 
+              (change)="onImageSelected($event)"
+            >
           </div>
+        </div>
+
+        <div class="col-md-4 col-12 my-2" *ngIf="bloggerProfile.data">
+          <h3>
+            <b> {{ bloggerProfile.data.first_name }} </b> {{ bloggerProfile.data.last_name }}
+          </h3>
+          <h4>
+            <i class="fa fa-user-circle-o me-1" aria-hidden="true"></i> 
+            {{ bloggerProfile.data.job ? bloggerProfile.data.job : bloggerProfile.data.role }}
+          </h4>
+          <h4>
+            <i class="fa fa-envelope me-1" aria-hidden="true"></i> {{ bloggerProfile.data.email }}
+          </h4>
+          <h4>
+            <i class="fa fa-calendar-check-o me-1" aria-hidden="true"></i> {{ bloggerProfile.data.joined }}
+          </h4>
+          <h4 *ngIf="bloggerProfile.data.address">
+            <i class="fa fa-map me-1" aria-hidden="true"></i> {{ bloggerProfile.data.address }}
+          </h4>
+        </div>
+
+        <div class="col-md-6 col-12 my-2 borderLeft">
+          <p class="d-none d-md-block" *ngIf="bloggerProfile.data.about">
+            <b>About me:</b> {{ bloggerProfile.data.about }}
+          </p>
+          <a *ngIf="(User | async)" routerLink="/write_blog" class="btn btn-sm btn-dark me-2">Write new blog</a>
+          <a *ngIf="(User | async)" routerLink="/profile_edit" class="btn btn-sm btn-light">Edit profile</a>
+          <br>
+        </div>
+
+      </div>
     </div>
+  </div>
 </div>
 
+<!-- BLOGS SECTION -->
+
 <div class="container blogSection">
-    <div class="row py-5">
-    
-            <div class="col-md-9 col-12">
-                
-                <p class="section-title"> <i class="fa fa-paperclip me-2" aria-hidden="true"></i> 
-                    {{ bloggerProfile.data.first_name+"'s" }} blogs
-                </p>
+  <div class="row py-5">
 
-                <nav aria-label="...">
-                    <ul class="pagination pagination-sm">
-                        <li class="page-item" [class.active]="(page+1) == bloggerAllBlogs.currentPage" *ngFor="let page of bloggerAllBlogs.totalPages">
-                            <a class="page-link" (click)="changePage(page+1)"> {{ page+1 }} </a>
-                        </li>
-                    </ul>
-                </nav>
+    <div class="col-md-9 col-12">
+      <div class="d-flex justify-content-between align-items-center mb-4">
+        <p class="section-title m-0">
+          <i class="fa fa-paperclip me-2" aria-hidden="true"></i> 
+          {{ bloggerProfile.data.first_name+"'s" }} blogs
+        </p>
+        
+        <!-- Status Filter Dropdown - Corrected Syntax -->
+       
+      </div>
 
-                <p *ngIf="bloggerAllBlogs.error || bloggerAllBlogs.loading">
-                    {{ bloggerAllBlogs.error }}
-                    {{ bloggerAllBlogs.loading ? 'Loading...' : '' }}
-                </p>
+      <nav aria-label="...">
+        <ul class="pagination pagination-sm">
+          <li class="page-item" [class.active]="(page+1) == bloggerAllBlogs.currentPage" *ngFor="let page of bloggerAllBlogs.totalPages">
+            <a class="page-link" (click)="changePage(page+1)"> {{ page+1 }} </a>
+          </li>
+        </ul>
+      </nav>
 
-                <div class="row" *ngIf="!bloggerAllBlogs.error && !bloggerAllBlogs.loading">
-    
-                    <!-- blogs -->
-                    <p *ngIf="!bloggerAllBlogs.items.length">
-                        <i class="fa fa-exclamation-triangle me-2" aria-hidden="true"></i> No blogs found!
-                      </p>
+      <p *ngIf="bloggerAllBlogs.error || bloggerAllBlogs.loading">
+        {{ bloggerAllBlogs.error }}
+        {{ bloggerAllBlogs.loading ? 'Loading...' : '' }}
+      </p>
 
-                    <div class="col-md-4 col-12" *ngFor="let blog of bloggerAllBlogs.items">
-                        <div class="card blogs" style="width: 100%;">
-                            <div class="img">
-                                <img [src]="blog.img" class="card-img-top">
-                            </div>
-    
-                            <div class="card-body">
-    
-                              <h5 class="card-title">
-                                  <a [routerLink]="['/blog', blog._id]">
-                                  {{ blog.title }}
-                                </a>
-                              </h5>
-                              <div *ngIf="(User | async) as user" class="mt-3">
-                                <button 
-                                  *ngIf="user._id === blog.writter._id" 
-                                  class="btn btn-sm btn-primary me-2"
-                                  [routerLink]="['/edit-blog', blog._id]"
-                                >
-                                  <i class="fa fa-pencil" aria-hidden="true"></i> Edit
-                                </button>
-                            
-                                <button 
-                                  *ngIf="user._id === blog.writter._id" 
-                                  (click)="deleteBlog(blog._id)"
-                                  class="btn btn-sm btn-danger"
-                                >
-                                  <i class="fa fa-trash" aria-hidden="true"></i> Delete
-                                </button>
-                              </div>
-                              
-                              <p class="card-text">
-                                <i class="fa fa-user-circle-o" aria-hidden="true"></i> {{ blog.writter.first_name }}
-                                <br>
-                                <i class="fa fa-bookmark" aria-hidden="true"></i> {{ blog.category.name }}
-                              </p>
-                            </div>
-                          </div>
-                    </div>
-                    <!-- blogs -->
-                </div>
+      <div class="row" *ngIf="!bloggerAllBlogs.error && !bloggerAllBlogs.loading">
+        
+        <p *ngIf="!bloggerAllBlogs.items.length">
+          <i class="fa fa-exclamation-triangle me-2" aria-hidden="true"></i> No blogs found!
+        </p>
 
+        <div class="col-md-4 col-12 mb-4" *ngFor="let blog of filteredBlogs">
+          <div class="card h-100">
+            <div class="img position-relative">
+              <img [src]="blog.img" class="card-img-top" style="height: 180px; object-fit: cover;">
+              <!-- Status Badge -->
+              <span class="position-absolute top-0 end-0 m-2 badge" 
+                    [ngClass]="{
+                      'bg-success': blog.status === 'Published',
+                      'bg-warning text-dark': blog.status === 'Draft'
+                    }">
+                {{ blog.status }}
+              </span>
             </div>
 
-            <div class="col-md-3 col-12">
-                <ng-container *ngIf="!bloggerProfile.loading && bloggerProfile.data?._id && bloggerProfile.data.first_name">
-                  <app-category
-                    [bloggerName]="bloggerProfile.data.first_name"
-                    [bloggerId]="bloggerProfile.data._id|| null"
-                    [categoryId]="categoryId"
-                  ></app-category>
-                </ng-container>
-              </div>
+            <div class="card-body d-flex flex-column">
+              <h5 class="card-title">
+                <a [routerLink]="['/blog', blog._id]">
+                  {{ blog.title }}
+                </a>
+              </h5>
               
+              <div class="blog-meta mb-3">
+                <div class="meta-item">
+                  <i class="fa fa-user-circle-o" aria-hidden="true"></i>
+                  <span>{{ blog.writter.first_name }}</span>
+                </div>
+                <div class="meta-item">
+                  <i class="fa fa-bookmark" aria-hidden="true"></i>
+                  <span>{{ blog.category.name }}</span>
+                </div>
+              </div>
+
+              <div class="mt-auto">
+                <div *ngIf="(User | async) as user" class="d-flex justify-content-between">
+                  <button 
+                    *ngIf="user._id === blog.writter._id" 
+                    class="btn btn-sm btn-primary"
+                    [routerLink]="['/edit-blog', blog._id]"
+                  >
+                    <i class="fa fa-pencil" aria-hidden="true"></i> Edit
+                  </button>
+                  <button 
+                    *ngIf="user._id === blog.writter._id" 
+                    (click)="deleteBlog(blog._id)"
+                    class="btn btn-sm btn-danger"
+                  >
+                    <i class="fa fa-trash" aria-hidden="true"></i> Delete
+                  </button>
+                  <button 
+                    class="btn btn-sm btn-outline-secondary"
+                    [routerLink]="['/blog', blog._id]"
+                  >
+                    <i class="fa fa-eye" aria-hidden="true"></i> View
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
 
     </div>
+
+  
+
+  </div>
 </div>

@@ -44,20 +44,40 @@
 
                 <div class="mb-3">
                     <label class="form-label">Blog body*</label>
-                    <textarea class="form-control" [class.is-invalid]="body.touched && body.invalid" style="height: 100px" required #body="ngModel" [(ngModel)]="blog.data.body" name="body"></textarea>
-                    <small class="text-danger" *ngIf="body.touched && body.invalid">
-                        Fill this fields
+                  
+                    <textarea 
+                      class="form-control" 
+                      [class.is-invalid]="(body.invalid && body.touched) || bodyWordError" 
+                      style="height: 100px"
+                      required 
+                      #body="ngModel" 
+                      [(ngModel)]="blog.data.body" 
+                      name="body"
+                      (input)="validateBodyWords()">
+                    </textarea>
+                  
+                    <small class="text-danger" *ngIf="body.invalid && body.touched">
+                      Fill this field
+                    </small>
+                  
+                    <small class="text-danger" *ngIf="bodyWordError">
+                      Blog body must have at least 3 Sentences with Spaces.
                     </small>
                   </div>
+                  
+                  
 
                   <p *ngIf="blog.error" class="text-danger">
                     {{ blog.error }}
                   </p>
 
-                <button type="submit" class="btn btn-dark me-2" [disabled]="blogForm.invalid || blog.loading">
-                    {{ blog.loading ? 'Saving blog...' : 'Save blog' }}
+                <button type="submit" class="btn btn-dark me-2" [disabled]="blogForm.invalid || blog.loading || bodyWordError">
+                    {{ blog.loading ? 'Publishing blog...' : 'Publish Blog' }}
                 </button>
 
+<button type="button" class="btn btn-outline-secondary" [disabled]="blogForm.invalid || blog.loading || bodyWordError" (click)="saveBlog('draft')">
+  {{ blog.loading ? 'Saving as draft...' : 'Save as Draft' }}
+</button>
               </form>
         </div>
     </div>
