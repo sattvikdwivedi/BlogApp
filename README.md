@@ -5,14 +5,16 @@ This project is a **Blog Management System** that includes both a backend (Node.
 ---
 
 Link For Backend: https://github.com/sattvikdwivedi/Blog-Backend
+
 Deployed Link (Frontend):https://blog-app-sattvik.vercel.app
+
 Deployed Link(Backend):https://blog-backend-sattvik.vercel.app/
 
 ## Setup Instructions
 
 ### Prerequisites
-- **Node.js** (v16 or later)
-- **Angular CLI** (v15 or later)
+- **Node.js** (v18 or later)
+- **Angular CLI** (v19 or later)
 - **MongoDB** (for backend database)
 - **Cloudinary Account** (for image uploads)
 - **Postman** (optional, for API testing)
