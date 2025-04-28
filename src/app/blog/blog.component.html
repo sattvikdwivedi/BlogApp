@@ -130,6 +130,13 @@
                     </p>
                 </div>
             </div>
+            <div *ngIf=" blog.data.status ==='Draft' && User.data?._id === blog.data.writter?._id" class="alert alert-info mt-4">
+                <h5>This blog is currently in Draft.</h5>
+                <p>Do you want to publish it?</p>
+                <button class="btn btn-success me-2" (click)="publishDraftedBlog()">Yes, Publish</button>
+                <button class="btn btn-secondary" (click)="cancelPublish()">No</button>
+              </div>
+  
 
         </div>
 

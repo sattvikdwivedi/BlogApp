@@ -11,6 +11,7 @@ import { AuthService } from '../services/auth.service';
 import { BlogService } from '../services/blog.service';
 import { environment } from '../../environment/environment';
 import { ReverseArrayPipe } from '../pipes/reverse-array.pipe';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-blog',
@@ -65,7 +66,9 @@ export class BlogComponent implements OnInit, OnDestroy{
   constructor(
     private _authService: AuthService,
     private _route: ActivatedRoute,
-    private _blogService: BlogService
+    private _blogService: BlogService,
+    private toastr: ToastrService
+    
   ) { }
 
   ngOnInit(): void {
@@ -118,6 +121,7 @@ export class BlogComponent implements OnInit, OnDestroy{
       this.blog.loading = false;
       this.blog.sub?.unsubscribe();
     });
+    
   }
 
   doComment(commentForm: any) {
@@ -137,46 +141,47 @@ export class BlogComponent implements OnInit, OnDestroy{
       this.postComment.sub?.unsubscribe();
 
     }, err => {
-
+      
       this.postComment.error = err;
       this.postComment.loading = false;
       this.postComment.sub?.unsubscribe();
-
+      
     })
-
+    
   }
-
+  
   doReact(reactName:string) {
     if( !this.User.data ){
       return;
     }
-
+    
     this.postReact.body.blogId = this.blog.blogId;
     this.postReact.body.reactName = reactName;
-
+    
     this.postReact.loading = true;
     this.postReact.error = null;
-
+    
     this.postReact.sub = this._blogService.postReact(this.postReact.body)
     .subscribe((res:any) => {
-
+      
       this.blog.data.reacts = res.reacts;
       this.checkHasReact();
       this.postReact.loading = false;
       this.postReact.sub?.unsubscribe();
-
+      
     }, err => {
-
+      
       this.postReact.error = err;
       this.postReact.loading = false;
       this.postReact.sub?.unsubscribe();
-
+      
     })
   }
-
+  
   checkHasReact() {
-
+    
     this.User.hasReact = null;
+    console.log(this.blog.data);
     const REACTS = ['like', 'love', 'sad', 'funny', 'informative']
     let checkR = [];
 
@@ -188,5 +193,39 @@ export class BlogComponent implements OnInit, OnDestroy{
     });
 
   }
+  publishDraftedBlog() {
+    this.blog.loading = true;
+    this.blog.error = null;
+  
+    const formData = new FormData();
+    console.log(this.blog.data);
+    formData.append('title', this.blog.data.title || '');
+    formData.append('category', this.blog.data.category._id || this.blog.data.category || '');
+    formData.append('body', this.blog.data.body || '');
+    formData.append('status', 'Published'); // Publish the draft
+  
+    this._blogService.updateBlog(this.blog.data._id, formData)
+      .subscribe({
+        next: (res: any) => {
+          this.toastr.success('Blog Published Successfully!', 'Success');
+          this.blog.data.status = 'Published'; // 👈 Immediately update status locally
+          this.blog.loading = false;
+        },
+        error: (err) => {
+          this.toastr.error('Failed to publish blog.', 'Error');
+          this.blog.loading = false;
+        }
+      });
+  }
+  
+
+  
+  
+  cancelPublish() {
+    this.toastr.info('No problem! You can publish later.');
+  }
+  
+
+  
 
 }
