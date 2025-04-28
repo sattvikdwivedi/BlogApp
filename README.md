@@ -4,11 +4,17 @@ This project is a **Blog Management System** that includes both a backend (Node.
 
 ---
 
+Link For Backend: https://github.com/sattvikdwivedi/Blog-Backend
+
+Deployed Link (Frontend):https://blog-app-sattvik.vercel.app
+
+Deployed Link(Backend):https://blog-backend-sattvik.vercel.app/
+
 ## Setup Instructions
 
 ### Prerequisites
-- **Node.js** (v16 or later)
-- **Angular CLI** (v15 or later)
+- **Node.js** (v18 or later)
+- **Angular CLI** (v19 or later)
 - **MongoDB** (for backend database)
 - **Cloudinary Account** (for image uploads)
 - **Postman** (optional, for API testing)
@@ -24,7 +30,7 @@ This project is a **Blog Management System** that includes both a backend (Node.
    ```
 3. Create a `.env` file in the root of the backend directory and add the following:
    ```env
-   PORT=5000
+   PORT=3000
    MONGO_URI=<your_mongodb_connection_string>
    CLOUDINARY_CLOUD_NAME=<your_cloudinary_cloud_name>
    CLOUDINARY_API_KEY=<your_cloudinary_api_key>
@@ -106,6 +112,9 @@ Approximately **21 hours**.
 - Improve UI/UX with a more modern design.
 
 ---
+
+
+
 
 ## License
 This project is licensed under the MIT License.
