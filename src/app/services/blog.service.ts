@@ -74,7 +74,7 @@ export class BlogService {
       'Authorization': `Bearer ${accessToken}`  // Add Authorization header with Bearer token
     };
     
-    return this._http.delete(`${environment.apiUrl}/admin/posts/${blogId}`, { headers })
+    return this._http.delete(`${environment.apiUrl}/admin/posts/user/${blogId}`, { headers })
       .pipe(
         catchError(err => this._errorService.handleError(err))
       );

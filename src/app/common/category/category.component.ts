@@ -64,7 +64,6 @@ export class CategoryComponentComponent implements OnInit {
   }
 
   getCategorizedBlogsCount() {
-    debugger;
     this.categories.loading = true;
     this.categories.error = null;
 
